@@ -9,6 +9,7 @@ type Status = "initial" | "pending" | "error" | "success";
 interface InitOption extends RequestInit {
   disabled?: boolean;
   enableCache?: boolean;
+  cacheInvalidationTimeout?: number;
 }
 
 interface FetchAPI {
@@ -95,11 +96,11 @@ export default function useFetchAPI<T>(
             if (pagination && Array.isArray(result)) {
               const paginationResult = { rows: result, ...pagination } as T;
               setResult(paginationResult);
-              if (enableCache) cache.set(url.toString(), paginationResult)
+              if (enableCache) cache.set(url.toString(), paginationResult, { cacheInvalidationTimeout: init?.cacheInvalidationTimeout })
               return paginationResult;
             }
             setResult(result);
-            if (enableCache) cache.set(url.toString(), result)
+            if (enableCache) cache.set(url.toString(), result, { cacheInvalidationTimeout: init?.cacheInvalidationTimeout })
             return result as T;
           }
 

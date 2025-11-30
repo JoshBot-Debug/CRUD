@@ -136,10 +136,11 @@ export default function UpsertComponent(props: any) {
                 label="User"
                 required
                 enableCache
-                enableClientFilter
+                cacheInvalidationTimeout={30000}
+                // enableClientFilter
                 disableFetchOnMount
                 disabled={isReadonly}
-                parseResult={(result) => result.rows.map((r: any) => ({ label: r.firstName, value: r.id }))}
+                parseResult={(result) => result.rows.map((r: any) => ({ label: `${r.firstName} ${r.middleName} ${r.lastName}`, value: r.id }))}
               />
             </Grid>
           </Grid>

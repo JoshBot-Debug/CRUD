@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import type { GridColDef } from "@mui/x-data-grid";
 import download from "downloadjs";
 import { useCallback } from "react";
-import { useLocation, useSubmit, type SubmitFunction } from "react-router";
+import { useLocation, useSearchParams, useSubmit, type SubmitFunction } from "react-router";
 import { useNavigate, useResolvedPath } from "react-router";
 import { exportToCSV } from "~/.client/helper";
 import Datatable from "~/components/Datatable";
@@ -22,9 +22,9 @@ export interface CreatePageListOptions {
   pageParamsKey: string;
   formId: string;
   pageTitle:
-    | string
-    | React.ReactNode
-    | ((loaderData: any) => string | React.ReactNode);
+  | string
+  | React.ReactNode
+  | ((loaderData: any) => string | React.ReactNode);
   renderIcon?: (pathname: string) => React.ReactNode;
   onRenderContextMenuItems?: (
     row: any,
@@ -47,6 +47,8 @@ export default function createPageList(options: CreatePageListOptions) {
     const dialog = useDialog();
     const submit = useSubmit();
     const fetch = useFetchAPI();
+    const [searchParams] = useSearchParams();
+    const search = searchParams.get(`search:${options.pageParamsKey}`)
 
     const importDialog = useDialogComponent({
       title: "Import",
@@ -61,15 +63,15 @@ export default function createPageList(options: CreatePageListOptions) {
               !options.import
                 ? undefined
                 : async () => {
-                    if (!options.import) return;
-                    const result = await fetch<any>(options.import());
-                    download(result.blob, result.filename, result.mimeType);
-                  }
+                  if (!options.import) return;
+                  const result = await fetch<any>(options.import());
+                  download(result.blob, result.filename, result.mimeType);
+                }
             }
           />
         </form>
       ),
-      onConfirm: () => {},
+      onConfirm: () => { },
       confirmButtonProps: {
         form: `import-${options.formId}`,
         type: "submit",
@@ -139,6 +141,7 @@ export default function createPageList(options: CreatePageListOptions) {
             rows={loaderData.many.rows}
             rowCount={loaderData.many.rowCount}
             hasNextPage={loaderData.many.hasNextPage}
+            search={search}
             columns={options.columns}
             onRowDoubleClick={onRowDoubleClick}
             onRenderContextMenuItems={onRenderContextMenuWithDialog}

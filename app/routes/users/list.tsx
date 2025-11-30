@@ -1,5 +1,6 @@
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
+import { formatDatetime } from "~/helper";
 
 export const loader = createPageListLoader({
   pageParamsKey: "users",
@@ -37,6 +38,27 @@ export default createPageList({
       headerName: "Phone",
       flex: 2,
       type: "string"
+    },
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      flex: 2,
+      type: "dateTime",
+      valueFormatter: formatDatetime
+    },
+    {
+      field: "updatedAt",
+      headerName: "Updated At",
+      flex: 2,
+      type: "dateTime",
+      valueFormatter: formatDatetime
+    },
+    {
+      field: "deletedAt",
+      headerName: "Deleted At",
+      flex: 2,
+      type: "dateTime",
+      valueFormatter: formatDatetime
     }
   ],
   formId: "users",

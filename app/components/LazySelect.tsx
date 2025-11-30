@@ -32,6 +32,7 @@ interface Props<M extends boolean> {
   disableFetch?: boolean;
   enableCache?: boolean;
   enableClientFilter?: boolean;
+  cacheInvalidationTimeout?: number;
   disableFetchOnMount?: boolean;
   filterMatch?: "any" | "start";
   path: `/${string}`;
@@ -103,7 +104,7 @@ export default function LazySelect<M extends boolean = false>(props: Props<M>) {
     try {
       const url = new URL(API + props.path);
       if (search) url.searchParams.set(props.searchKey ?? "search", search);
-      const result = await fetch<any>(url, { headers: { "content-type": "application/json" }, enableCache: props.enableCache });
+      const result = await fetch<any>(url, { headers: { "content-type": "application/json" }, enableCache: props.enableCache, cacheInvalidationTimeout: props.cacheInvalidationTimeout });
       setOptions(props.parseResult(result));
       return result;
     } catch (error) {

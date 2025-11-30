@@ -19,6 +19,8 @@ import type {
 import { useLoaderData, useSearchParams } from "react-router";
 import OptionsMenu, { type OptionsMenuItem } from "./OptionsMenu";
 import type { PopoverPosition } from "@mui/material/Popover";
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
 
 interface Props {
   onRowDoubleClick?: (row: any) => void;
@@ -27,6 +29,7 @@ interface Props {
   rows: any[];
   rowCount: number;
   hasNextPage: boolean;
+  search?: string | null;
   onRenderContextMenuItems?: (row: any) => OptionsMenuItem[];
 }
 
@@ -166,11 +169,37 @@ export default function Datatable(props: Props) {
     );
   }, [props.rows, props.onRenderContextMenuItems, contextMenuRowIndex]);
 
+  const columns = React.useMemo(() => {
+
+    function renderCell(cell: any) {
+      if (!props.search) return cell.value;
+
+      const value = cell.formattedValue
+      const matches = match(value, props.search, { insideWords: false, });
+      const parts = parse(value, matches);
+
+      return <div style={{ width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+        {parts.map((part, index) => (
+          <span
+            key={index}
+            style={{
+              fontWeight: part.highlight ? 800 : 400,
+            }}
+          >
+            {part.text}
+          </span>
+        ))}
+      </div>
+    }
+
+    return props.columns.map(col => "renderCell" in col ? col : ({ ...col, renderCell }))
+  }, [props.columns, props.search])
+
   return (
     <>
       <DataGrid
         rows={props.rows}
-        columns={props.columns}
+        columns={columns}
         onRowDoubleClick={props.onRowDoubleClick}
         getRowClassName={getRowClassName}
         filterMode="server"
@@ -256,8 +285,8 @@ export function TinyDatatable(props: TinyDatatableProps) {
                 primary={
                   props.column.titleValueFormatter
                     ? props.column.titleValueFormatter(
-                        row[props.column.titleField],
-                      )
+                      row[props.column.titleField],
+                    )
                     : row[props.column.titleField]
                 }
                 secondary={
@@ -265,8 +294,8 @@ export function TinyDatatable(props: TinyDatatableProps) {
                     ? undefined
                     : props.column.subtitleValueFormatter
                       ? props.column.subtitleValueFormatter(
-                          row[props.column.subtitleField],
-                        )
+                        row[props.column.subtitleField],
+                      )
                       : row[props.column.subtitleField]
                 }
               />
