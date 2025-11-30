@@ -172,7 +172,7 @@ export default function Datatable(props: Props) {
   const columns = React.useMemo(() => {
 
     function renderCell(cell: any) {
-      if (!props.search) return cell.value;
+      if (!props.search) return cell.formattedValue;
 
       const value = cell.formattedValue
       const matches = match(value, props.search, { insideWords: false, });
