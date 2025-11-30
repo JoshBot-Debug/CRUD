@@ -37,6 +37,7 @@ interface Props<M extends boolean> {
   path: `/${string}`;
   parseResult: (result: any) => Option[];
   required?: boolean;
+  limit?: number;
   sx?: SxProps<Theme>;
   searchKey?: string;
 
@@ -170,7 +171,7 @@ export default function LazySelect<M extends boolean = false>(props: Props<M>) {
     [],
   );
 
-  const filterOptions = React.useCallback((options: Option[], state: FilterOptionsState<Option>) => props.enableClientFilter ? createFilterOptions<Option>({ matchFrom: props.filterMatch || "start" })(options, state) : options, [props.enableClientFilter]);
+  const filterOptions = React.useCallback((options: Option[], state: FilterOptionsState<Option>) => props.enableClientFilter ? createFilterOptions<Option>({ matchFrom: props.filterMatch || "start", limit: props.limit || 50 })(options, state) : options, [props.enableClientFilter]);
 
   const renderInput = React.useCallback(
     (params: AutocompleteRenderInputParams) => {
