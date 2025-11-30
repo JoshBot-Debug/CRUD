@@ -175,7 +175,7 @@ export default function Datatable(props: Props) {
       if (!props.search) return cell.formattedValue;
 
       const value = cell.formattedValue
-      const matches = match(value, props.search, { insideWords: false, });
+      const matches = match(value, props.search, { insideWords: true });
       const parts = parse(value, matches);
 
       return <div style={{ width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>

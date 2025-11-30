@@ -31,6 +31,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Search from "./Search";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import { debounce } from "@mui/material";
+
+const lazy = debounce((callback: () => void) => callback(), 400);
 
 interface FormItem {
   form?: string;
@@ -97,7 +100,7 @@ export default function Page(props: Props) {
 
   const onSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchParams(
+      lazy(() => setSearchParams(
         (prev) => {
           if (!props.pageParamsKey) {
             console.error(
@@ -112,7 +115,7 @@ export default function Page(props: Props) {
           return next;
         },
         { replace: true, preventScrollReset: true },
-      );
+      ));
     },
     [setSearchParams],
   );
@@ -218,7 +221,7 @@ export default function Page(props: Props) {
           formAction={
             !!props?.form?.create?.formAction
               ? (formData) =>
-                  props?.form?.create?.formAction?.(formData, submit)
+                props?.form?.create?.formAction?.(formData, submit)
               : undefined
           }
         >
@@ -246,7 +249,7 @@ export default function Page(props: Props) {
             formAction={
               !!props?.form?.update?.formAction
                 ? (formData) =>
-                    props?.form?.update?.formAction?.(formData, submit)
+                  props?.form?.update?.formAction?.(formData, submit)
                 : undefined
             }
           >
@@ -335,7 +338,7 @@ export default function Page(props: Props) {
             formAction={
               !!props?.form?.delete?.formAction
                 ? (formData) =>
-                    props?.form?.delete?.formAction?.(formData, submit)
+                  props?.form?.delete?.formAction?.(formData, submit)
                 : undefined
             }
           >
