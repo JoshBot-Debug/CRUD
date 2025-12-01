@@ -135,10 +135,6 @@ export default function UpsertComponent(props: any) {
                 name="user"
                 label="User"
                 required
-                enableCache
-                cacheInvalidationTimeout={30000}
-                // enableClientFilter
-                disableFetchOnMount
                 disabled={isReadonly}
                 parseResult={(result) => result.rows.map((r: any) => ({ label: `${r.firstName} ${r.middleName} ${r.lastName}`, value: r.id }))}
               />
