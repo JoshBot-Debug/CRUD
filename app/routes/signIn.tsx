@@ -69,7 +69,7 @@ export async function action({ request }: Route.ActionArgs) {
 
   const formData: any = Object.fromEntries(await request.formData());
 
-  const [result, commit] = await fetchAPI<any>("/v1/authentication/login", {
+  const [result, commit] = await fetchAPI<any>("/v1/authentication.login", {
     session,
     method: "POST",
     body: JSON.stringify(formData),

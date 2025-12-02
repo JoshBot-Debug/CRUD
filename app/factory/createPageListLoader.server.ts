@@ -26,12 +26,16 @@ export default function createPageListLoader(
       pageParamsKey: options.pageParamsKey,
     });
 
-    const [response, commit] = await fetchAPI<any>(url, {
+    const r = await fetchAPI<any>(url, {
       session,
       context: l.context,
     });
-    result.many = response ?? {};
-    if (commit) await headers.commit();
+
+    if (r instanceof Response) return r;
+
+    if (r.commitSession) await headers.commit();
+
+    result.many = r.result ?? {};
 
     return data(result, { headers });
   };

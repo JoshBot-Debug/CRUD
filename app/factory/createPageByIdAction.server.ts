@@ -17,7 +17,7 @@ export default function createPageByIdAction(
     const formData = await a.request.formData();
     const method = a.request.method.toLowerCase();
 
-    const [result, commit] = await fetchAPI<any>(
+    const r = await fetchAPI<any>(
       method === "patch" ? options.patch(a) : options.delete(a),
       {
         session,
@@ -27,19 +27,21 @@ export default function createPageByIdAction(
       },
     );
 
-    if (!result)
-      return data(null, { headers: await createHeaders(session, { commit }) });
+    if (r instanceof Response) return r;
+
+    if (!r.result)
+      return data(null, { headers: await createHeaders(session, { commit: r.commitSession }) });
 
     if (method === "delete")
       return redirect(
         getReferer(a.request, { goBack: !searchParams.has("stayOnPage") }),
         {
-          headers: await createHeaders(session, { commit }),
+          headers: await createHeaders(session, { commit: r.commitSession }),
         },
       );
 
     return redirect(getReferer(a.request), {
-      headers: await createHeaders(session, { commit }),
+      headers: await createHeaders(session, { commit: r.commitSession }),
     });
   };
 }
