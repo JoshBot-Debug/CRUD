@@ -1,9 +1,11 @@
 import { fetchAPI } from "~/.server/helper";
 import type { Route } from "./+types";
 
-export async function action({ request }: Route.LoaderArgs) {
+export async function action({ request, params }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  return await fetchAPI(url.pathname as any, {
+  const { "*": splat } = params as any;
+  const target = `/v1/${splat}`;
+  return await fetchAPI((target + "?" + url.searchParams) as any, {
     method: request.method,
     headers: request.headers,
     body: request.body,
@@ -11,9 +13,11 @@ export async function action({ request }: Route.LoaderArgs) {
   })
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  return await fetchAPI((url.pathname + "?" + url.searchParams) as any, {
+  const { "*": splat } = params as any;
+  const target = `/v1/${splat}`;
+  return await fetchAPI((target + "?" + url.searchParams) as any, {
     method: request.method,
     headers: request.headers,
     body: request.body,

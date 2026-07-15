@@ -71,18 +71,22 @@ export function merge<T>(object: T, next: T): T {
   return next;
 }
 
-export function renderForeignKey(url: `/${string}/`) {
-  return ({ value }: any) => {
+export function renderForeignKey(url: `/${string}/`, displayField: string) {
+  return ({ row, field, ...d }: any) => {
     const r2 = useResolvedPath("../");
     const to = r2.pathname.slice(0, -1) + url;
+    const value = row[field]
+
+    if (value == undefined) return "-";
 
     if (!Array.isArray(value))
-      return <Link to={to + value.id}>{value.id}</Link>;
+      return <Link to={to + value.id}>{value[displayField]}</Link>;
+
     return (
       <Box sx={{ display: "flex", gap: 1 }}>
-        {value.map(({ id }: any) => (
-          <Link key={id} to={to + id}>
-            <Chip label={id} color="info" />
+        {value.map((o: any) => (
+          <Link key={o.id} to={to + o.id}>
+            <Chip label={o[displayField]} color="info" />
           </Link>
         ))}
       </Box>

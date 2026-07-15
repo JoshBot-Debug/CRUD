@@ -52,12 +52,13 @@ const CRUD = [
 ]
 
 export default [
+  route("api/*", "routes/proxy.tsx"),
+  
   layout("layouts/BaseLayout.tsx", [
     index("routes/index.tsx"),
 
     route("sign-in", "routes/signIn.tsx"),
     route("sign-out", "routes/signOut.tsx"),
-    route("v1/*", "routes/proxy.tsx"),
 
     layout("layouts/AuthenticatedLayout.tsx", [
       layout("layouts/ErrorBoundaryLayout.tsx", [

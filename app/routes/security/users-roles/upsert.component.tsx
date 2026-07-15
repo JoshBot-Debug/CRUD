@@ -35,13 +35,11 @@ export default function UpsertComponent(props: any) {
               sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             >
               <LazySelect
-                path="/v1/users"
+                path="/api/users"
                 name="user"
                 label="User"
                 disabled={isReadonly}
-                parseResult={(result) =>
-                  result.map((r: any) => ({ label: r.full_name, value: r.id }))
-                }
+                parseResult={(result) => result.rows.map((r: any) => ({ label: `${r.firstName} ${r.middleName} ${r.lastName}`, value: r.id }))}
                 defaultValue={{
                   label: state.user?.full_name,
                   value: state.user?.id,
@@ -49,7 +47,7 @@ export default function UpsertComponent(props: any) {
                 required
               />
               <LazySelect
-                path="/v1/security/roles"
+                path="/api/security/roles"
                 name="role"
                 label="Roles"
                 disabled={isReadonly}

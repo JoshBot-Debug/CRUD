@@ -8,15 +8,15 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || "development"}`, quiet: tr
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-  server: {
-    proxy: {
-      "/api": {
-        target: process.env.VITE_API,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/v1"),
-      }
-    }
-  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: process.env.VITE_API,
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, "/v1"),
+  //     }
+  //   }
+  // },
   ssr: {
     noExternal: ["@mui/x-data-grid"],
   },

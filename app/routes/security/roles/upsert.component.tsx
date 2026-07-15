@@ -54,7 +54,7 @@ export default function UpsertComponent(props: any) {
                 required
               />
               <LazySelect
-                path="/v1/security/permissions"
+                path="/api/security/permissions"
                 name="permissions"
                 label="Permission"
                 disabled={isReadonly}

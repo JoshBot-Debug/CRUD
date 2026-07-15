@@ -35,7 +35,7 @@ export default function UpsertComponent(props: any) {
               sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             >
               <LazySelect
-                path="/v1/security/roles"
+                path="/api/security/roles"
                 name="role"
                 label="Roles"
                 disabled={isReadonly}
@@ -49,7 +49,7 @@ export default function UpsertComponent(props: any) {
                 required
               />
               <LazySelect
-                path="/v1/security/permissions"
+                path="/api/security/permissions"
                 name="permission"
                 label="Permissions"
                 disabled={isReadonly}

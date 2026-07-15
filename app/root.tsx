@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="relative">
         {isLoading && (
           <div
-            className="absolute top-0 left-0 right-0 bottom-0 opacity-0 z-[50] animate-fadeIn"
+            className="absolute top-0 left-0 right-0 bottom-0 opacity-0 z-50 animate-fadeIn"
             style={{
               backgroundColor: "var(--template-palette-background-paper)",
             }}

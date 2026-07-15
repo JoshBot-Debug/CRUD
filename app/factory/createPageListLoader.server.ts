@@ -31,6 +31,7 @@ export default function createPageListLoader(
       context: l.context,
     });
 
+    
     if (r instanceof Response) return r;
 
     if (r.commitSession) await headers.commit();

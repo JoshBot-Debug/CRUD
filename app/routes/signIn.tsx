@@ -69,19 +69,22 @@ export async function action({ request }: Route.ActionArgs) {
 
   const formData: any = Object.fromEntries(await request.formData());
 
-  const [result, commit] = await fetchAPI<any>("/v1/authentication.login", {
+  const r = await fetchAPI<any>("/v1/authentication.login", {
     session,
     method: "POST",
     body: JSON.stringify(formData),
   });
 
-  if (!result)
-    return data(null, { headers: await createHeaders(session, { commit }) });
+  if (r instanceof Response) return r;
 
-  if (!result?.token) return result;
 
-  session.set("token", result.token);
-  session.set("email", result.email);
+  if (!r.result)
+    return data(null, { headers: await createHeaders(session, { commit: r.commitSession }) });
+
+  if (!r.result?.token) return r.result;
+
+  session.set("token", r.result.token);
+  session.set("email", r.result.email);
 
   return redirect("/dashboard", {
     headers: await createHeaders(session, { commit: true }),

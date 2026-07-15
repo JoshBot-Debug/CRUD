@@ -29,13 +29,6 @@ export default createPageList({
       type: "string"
     },
     {
-      field: "permissions",
-      headerName: "Permissions",
-      flex: 1,
-      type: "string",
-      renderCell: renderForeignKey("/security/roles/", "name")
-    },
-    {
       field: "created_at",
       headerName: "Created At",
       flex: 1,

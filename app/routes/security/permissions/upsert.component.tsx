@@ -53,7 +53,7 @@ export default function UpsertComponent() {
                 defaultValue={state.description}
               />
               <LazySelect
-                path="/v1/security/roles"
+                path="/api/security/roles"
                 name="roles"
                 label="Roles"
                 disabled={isReadonly}
