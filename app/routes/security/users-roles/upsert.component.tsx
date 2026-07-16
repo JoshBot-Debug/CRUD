@@ -42,8 +42,8 @@ export default function UpsertComponent(props: any) {
                 disabled={isReadonly}
                 parseResult={(result) => result.rows.map((r: any) => ({ label: userFullName(r), value: r.id }))}
                 defaultValue={{
-                  label: userFullName(state.users_id),
-                  value: state.users_id?.id,
+                  label: userFullName(state.usersId),
+                  value: state.usersId?.id,
                 }}
                 required
               />
@@ -56,8 +56,8 @@ export default function UpsertComponent(props: any) {
                   result.rows.map((r: any) => ({ label: r.name, value: r.id }))
                 }
                 defaultValue={{
-                  label: state.roles_id?.name,
-                  value: state.roles_id?.id,
+                  label: state.rolesId?.name,
+                  value: state.rolesId?.id,
                 }}
                 required
               />

@@ -17,8 +17,8 @@ export const loader = createPageByIdLoader({
 
 export default createPageById({
   column: {
-    titleField: "users_id",
-    subtitleField: "users_id",
+    titleField: "usersId",
+    subtitleField: "usersId",
     titleValueFormatter: (value) => {
       console.log(value)
       return userFullName(value);

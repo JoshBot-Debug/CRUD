@@ -16,14 +16,10 @@ export const loader = createPageByIdLoader({
 
 export default createPageById({
   column: {
-    titleField: "role",
-    subtitleField: "role",
-    titleValueFormatter: (value) => {
-            return value.name;
-          },
-    subtitleValueFormatter: (value) => {
-            return value.description;
-          }
+    titleField: "rolesId",
+    subtitleField: "rolesId",
+    titleValueFormatter: (value) => value.name,
+    subtitleValueFormatter: (value) => value.description
   },
   formId: "roles-permissions",
   pageParamsKey: "roles-permissions",

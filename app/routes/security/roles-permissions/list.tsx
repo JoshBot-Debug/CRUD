@@ -16,14 +16,14 @@ export default createPageList({
       type: "string"
     },
     {
-      field: "role",
+      field: "rolesId",
       headerName: "Role",
       flex: 1,
       type: "string",
       renderCell: renderForeignKey("/security/roles/", "name")
     },
     {
-      field: "permission",
+      field: "permissionsId",
       headerName: "Permission",
       flex: 1,
       type: "string",
