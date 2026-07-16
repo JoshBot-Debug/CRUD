@@ -53,20 +53,6 @@ export default function UpsertComponent(props: any) {
                 defaultValue={state.description}
                 required
               />
-              <LazySelect
-                path="/api/security/permissions"
-                name="permissions"
-                label="Permission"
-                disabled={isReadonly}
-                parseResult={(result) =>
-                  result.rows.map((r: any) => ({ label: r.name, value: r.id }))
-                }
-                defaultValue={state.permissions?.map((o: any) => ({
-                  label: o.name,
-                  value: o.id,
-                }))}
-                multiple
-              />
             </Grid>
           </Grid>
         </CardContent>

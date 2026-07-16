@@ -29,21 +29,21 @@ export default createPageList({
       type: "string"
     },
     {
-      field: "created_at",
+      field: "createdAt",
       headerName: "Created At",
       flex: 1,
       type: "dateTime",
       valueFormatter: formatDatetime
     },
     {
-      field: "updated_at",
+      field: "updatedAt",
       headerName: "Updated At",
       flex: 1,
       type: "dateTime",
       valueFormatter: formatDatetime
     },
     {
-      field: "deleted_at",
+      field: "deletedAt",
       headerName: "Deleted At",
       flex: 1,
       type: "dateTime",

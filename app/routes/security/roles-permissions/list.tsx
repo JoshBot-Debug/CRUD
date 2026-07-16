@@ -1,6 +1,6 @@
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
-import { renderForeignKey } from "~/helper";
+import { formatDatetime, renderForeignKey } from "~/helper";
 
 export const loader = createPageListLoader({
   getMany: (l) => "userId" in l.params ? `/v1/users/${l.params.userId}/security/roles-permissions` : `/v1/security/roles-permissions`,
@@ -28,6 +28,27 @@ export default createPageList({
       flex: 1,
       type: "string",
       renderCell: renderForeignKey("/security/permissions/", "name")
+    },
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      flex: 1,
+      type: "dateTime",
+      valueFormatter: formatDatetime
+    },
+    {
+      field: "updatedAt",
+      headerName: "Updated At",
+      flex: 1,
+      type: "dateTime",
+      valueFormatter: formatDatetime
+    },
+    {
+      field: "deletedAt",
+      headerName: "Deleted At",
+      flex: 1,
+      type: "dateTime",
+      valueFormatter: formatDatetime
     }
   ],
   formId: "roles-permissions",
