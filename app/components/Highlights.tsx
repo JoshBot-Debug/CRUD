@@ -16,39 +16,39 @@ import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 const items = [
   {
     icon: <SettingsSuggestRoundedIcon />,
-    title: "Adaptive Workflow",
+    title: "Streamlined Sales Workflow",
     description:
-      "Our software adjusts to your business processes, streamlining invoicing, payroll, and reporting for maximum efficiency.",
+      "Manage leads, quotations, sales orders, and customer interactions in one connected workflow from first contact to closing the deal.",
   },
   {
     icon: <ConstructionRoundedIcon />,
-    title: "Robust Accounting Engine",
+    title: "Centralized Customer Data",
     description:
-      "Built to handle complex financial operations with accuracy, ensuring your ledgers, transactions, and reports are always reliable.",
+      "Keep customer profiles, contact details, communication history, and purchase records organized in a single location.",
   },
   {
     icon: <ThumbUpAltRoundedIcon />,
-    title: "Intuitive Interface",
+    title: "Simple & Intuitive",
     description:
-      "Navigate your accounting tasks effortlessly with a clean, user-friendly interface designed for both beginners and professionals.",
+      "Designed for busy sales teams with a clean interface that makes managing customers and orders fast and effortless.",
   },
   {
     icon: <AutoFixHighRoundedIcon />,
-    title: "Smart Automation",
+    title: "Sales Automation",
     description:
-      "Automate recurring invoices, tax calculations, and expense tracking to save time and reduce errors across your business.",
+      "Automate follow-up reminders, quotation generation, order processing, and repetitive tasks to improve productivity.",
   },
   {
     icon: <SupportAgentRoundedIcon />,
-    title: "Trusted Customer Support",
+    title: "Team Collaboration",
     description:
-      "Our knowledgeable support team is ready to assist you with any accounting or software queries, ensuring smooth operations.",
+      "Assign leads, track ownership, share customer updates, and keep everyone aligned throughout the sales process.",
   },
   {
     icon: <QueryStatsRoundedIcon />,
-    title: "Accurate Insights",
+    title: "Real-Time Sales Insights",
     description:
-      "Gain precise, real-time financial analytics and reports that help you make informed decisions and track your business performance.",
+      "Monitor your sales pipeline, conversion rates, pending quotations, and team performance with live dashboards and analytics.",
   },
 ];
 

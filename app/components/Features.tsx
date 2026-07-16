@@ -20,10 +20,6 @@ interface Item {
 }
 
 export default function Features() {
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(-1);
-
-  const onClickItem = (index: number) => setSelectedItemIndex(index);
-
   const section = (title: string, subtitle: string, items: Item[]) => (
     <Box sx={{ mt: { xs: 6, sm: 10 } }}>
       <Typography
@@ -47,7 +43,7 @@ export default function Features() {
         {items.map(({ icon, title, description }, index) => (
           <Grid size={1} key={index}>
             <Button
-              onClick={() => onClickItem(index)}
+              variant="outlined"
               sx={[
                 (theme) => ({
                   p: 2,
@@ -57,19 +53,12 @@ export default function Features() {
                   flexDirection: "column",
                   alignItems: "flex-start",
                   textAlign: "left",
-                  textTransform: "none",
-                  color: "text.secondary",
                   borderRadius: 2,
                   transition: "all 0.2s ease",
                   "&:hover": {
-                    backgroundColor: (theme.vars || theme).palette.action.hover,
                     transform: "translateY(-2px)",
                   },
                 }),
-                selectedItemIndex === index && {
-                  backgroundColor: "action.selected",
-                  color: "text.primary",
-                },
               ]}
             >
               {icon}
@@ -87,63 +76,69 @@ export default function Features() {
   return (
     <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
       {section(
-        "Our Features",
-        "Empower your business with powerful tools that simplify operations and accelerate growth.",
+        "Everything Your Sales Team Needs",
+        "Manage leads, customers, quotations, orders, and follow-ups from one modern CRM platform.",
         [
           {
-            icon: <ReceiptLongRoundedIcon />,
-            title: "E-Invoicing",
+            icon: <BusinessCenterRoundedIcon />,
+            title: "Lead Management",
             description:
-              "Generate and send GST-compliant invoices instantly with automated tax handling and digital records.",
+              "Capture leads from multiple sources, assign them to your sales team, and track every opportunity from first contact to conversion.",
+          },
+          {
+            icon: <ReceiptLongRoundedIcon />,
+            title: "Quotations & Orders",
+            description:
+              "Create professional quotations, convert them into sales orders with one click, and manage the entire sales process.",
           },
           {
             icon: <InventoryRoundedIcon />,
-            title: "Inventory Management",
+            title: "Product Catalog",
             description:
-              "Track stock levels in real time, manage suppliers, and receive alerts before you run out of key items.",
-          },
-          {
-            icon: <BusinessCenterRoundedIcon />,
-            title: "Project Tracking",
-            description:
-              "Plan, assign, and monitor tasks across teams with full visibility into progress and costs.",
+              "Maintain products, pricing, and stock availability so your sales team always has accurate information.",
           },
           {
             icon: <AccountBalanceRoundedIcon />,
-            title: "Corporate Accounting",
+            title: "Customer Management",
             description:
-              "Manage ledgers, reconcile transactions, and generate detailed financial reports effortlessly.",
+              "Store customer details, communication history, documents, and purchase records in one centralized location.",
           },
           {
-            icon: <AccountBalanceRoundedIcon />,
-            title: "Certified Compliance",
+            icon: <ViewQuiltRoundedIcon />,
+            title: "Sales Dashboard",
             description:
-              "Verified by Chartered Accountants and certified by the Tax Department for trusted compliance.",
+              "Monitor sales performance, conversion rates, pending quotations, and team activity with real-time insights.",
+          },
+          {
+            icon: <SchoolRoundedIcon />,
+            title: "Tasks & Follow-ups",
+            description:
+              "Schedule calls, meetings, reminders, and follow-ups so no opportunity is ever missed.",
           },
         ],
       )}
 
       {section(
-        "Designed For",
-        "Tailored solutions for every type of organization — built to fit your unique needs.",
+        "Perfect For",
+        "Built for businesses that want to organize their sales process and grow customer relationships.",
         [
           {
+            icon: <BusinessCenterRoundedIcon />,
+            title: "Sales Teams",
+            description:
+              "Track every lead, manage customer interactions, and close deals more efficiently.",
+          },
+          {
+            icon: <InventoryRoundedIcon />,
+            title: "Retail & Distribution",
+            description:
+              "Manage customers, product catalogs, quotations, and orders across multiple sales channels.",
+          },
+          {
             icon: <ViewQuiltRoundedIcon />,
-            title: "Manufacturers",
+            title: "Service Businesses",
             description:
-              "Streamline production, track raw materials, and manage costs with precision and control.",
-          },
-          {
-            icon: <SchoolRoundedIcon />,
-            title: "Schools & Institutions",
-            description:
-              "Simplify fee management, payroll, and resource tracking with a user-friendly dashboard.",
-          },
-          {
-            icon: <VolunteerActivismRoundedIcon />,
-            title: "Non-Profit Organizations",
-            description:
-              "Manage donations, grants, and community programs with transparency and accountability.",
+              "Organize clients, proposals, projects, and recurring business from a single platform.",
           },
         ],
       )}

@@ -42,11 +42,15 @@ export default function SideMenu() {
       <Box
         sx={{
           display: "flex",
-          mt: "calc(var(--template-frame-height, 0px) + 4px)",
+          alignItems: "center",
+          gap: 1,
           p: 1.5,
         }}
       >
-        <Logo />
+        <Box sx={{ maxWidth: 50 }}>
+          <Logo />
+        </Box>
+        <Typography variant="h3">Iotafox</Typography>
       </Box>
       <Divider />
       <Box

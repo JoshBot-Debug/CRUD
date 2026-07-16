@@ -7,8 +7,8 @@ import Page from "~/components/Page";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "ERP ExpertCallers" },
-    { name: "description", content: "An ExpertCallers ERP Solution" },
+    { title: "CRM | Iotafox" },
+    { name: "description", content: "An Iotafox CRM Solution" },
   ];
 }
 

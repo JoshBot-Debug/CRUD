@@ -17,8 +17,8 @@ export default function Copyright(props: any) {
     >
       {"Copyright © "}
       {new Date().getFullYear()}{" "}
-      <Link color="inherit" href="https://expertcallers.com/">
-        ExpertCallers Pvt. Ltd.
+      <Link color="inherit" href="https://iotafox.com/">
+        Iotafox
       </Link>{" "}
       All rights reserved.
     </Typography>

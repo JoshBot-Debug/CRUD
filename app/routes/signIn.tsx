@@ -13,11 +13,11 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "~/components/ForgotPassword";
 import Logo from "~/components/Logo";
-import ColorModeIconDropdown from "~/theme/ColorModeIconDropdown";
 import { data, Form, redirect } from "react-router";
 import type { Route } from "./+types/signIn";
 import { createHeaders, fetchAPI } from "~/.server/helper";
 import { getSession } from "~/.server/session";
+import AppAppBar from "~/components/AppAppBar";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -95,79 +95,79 @@ export default function SignIn({ actionData }: Route.ComponentProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <SignInContainer direction="column" justifyContent="space-between">
-      <ColorModeIconDropdown
-        sx={{ position: "fixed", top: "1rem", right: "1rem" }}
-      />
-      <Card variant="outlined">
-        <Box sx={{ maxWidth: 300, mx: "auto" }}>
-          <Logo />
-        </Box>
-        <Typography variant="h3" textAlign="center">
-          Sign in
-        </Typography>
-        <Form method="POST">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              gap: 2,
-            }}
-          >
-            <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <TextField
-                error={actionData?.error?.email}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={!!actionData?.error?.email ? "error" : "primary"}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <TextField
-                error={actionData?.error?.password}
-                name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={!!actionData?.error?.password ? "error" : "primary"}
-              />
-            </FormControl>
-            <FormControlLabel
-              name="rememberMe"
-              label="Remember me"
-              control={<Checkbox value="true" color="primary" />}
-            />
-            <ForgotPassword open={open} handleClose={() => setOpen(false)} />
-            <Button type="submit" fullWidth variant="contained">
-              Sign in
-            </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={() => setOpen(true)}
-              variant="body2"
-              sx={{ alignSelf: "center" }}
-            >
-              Forgot your password?
-            </Link>
+    <>
+      <AppAppBar />
+
+      <SignInContainer direction="column" justifyContent="space-between">
+        <Card variant="outlined">
+          <Box sx={{ maxWidth: 100, mx: "auto" }}>
+            <Logo />
           </Box>
-        </Form>
-        {/* <Divider>or</Divider>
+          <Typography variant="h3" textAlign="center">
+            Sign in
+          </Typography>
+          <Form method="POST">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                gap: 2,
+              }}
+            >
+              <FormControl>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <TextField
+                  error={actionData?.error?.email}
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  autoComplete="email"
+                  autoFocus
+                  required
+                  fullWidth
+                  variant="outlined"
+                  color={!!actionData?.error?.email ? "error" : "primary"}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <TextField
+                  error={actionData?.error?.password}
+                  name="password"
+                  placeholder="••••••"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  autoFocus
+                  required
+                  fullWidth
+                  variant="outlined"
+                  color={!!actionData?.error?.password ? "error" : "primary"}
+                />
+              </FormControl>
+              <FormControlLabel
+                name="rememberMe"
+                label="Remember me"
+                control={<Checkbox value="true" color="primary" />}
+              />
+              <ForgotPassword open={open} handleClose={() => setOpen(false)} />
+              <Button type="submit" fullWidth variant="contained">
+                Sign in
+              </Button>
+              <Link
+                component="button"
+                type="button"
+                onClick={() => setOpen(true)}
+                variant="body2"
+                sx={{ alignSelf: "center" }}
+              >
+                Forgot your password?
+              </Link>
+            </Box>
+          </Form>
+          {/* <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
@@ -180,7 +180,8 @@ export default function SignIn({ actionData }: Route.ComponentProps) {
               </Link>
             </Typography>
           </Box> */}
-      </Card>
-    </SignInContainer>
+        </Card>
+      </SignInContainer>
+    </>
   );
 }

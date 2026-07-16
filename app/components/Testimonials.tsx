@@ -7,40 +7,17 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
 const userTestimonials = [
   {
     avatar: (
       <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
-        J
+        A
       </Avatar>
     ),
-    name: "Joshua Myers",
-    occupation: "Senior Engineer",
+    name: "Arjun Mehta",
+    occupation: "Sales Manager, Vertex Distributors",
     testimonial:
-      "I absolutely love how versatile this product is! Whether I'm tackling work projects or indulging in my favorite hobbies, it seamlessly adapts to my changing needs. Its intuitive design has truly enhanced my daily routine, making tasks more efficient and enjoyable.",
-  },
-  {
-    avatar: (
-      <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
-        P
-      </Avatar>
-    ),
-    name: "Priya Desai",
-    occupation: "Operations Manager, Nexora Tech",
-    testimonial:
-      "Our team switched over a few months ago, and the improvement has been remarkable. The automation tools save us hours every week, and the reports are clear and actionable. It feels like we’ve gained an extra team member!",
-  },
-  {
-    avatar: (
-      <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
-        L
-      </Avatar>
-    ),
-    name: "Liam Carter",
-    occupation: "Founder, CloudFin Solutions",
-    testimonial:
-      "What impressed me most is the attention to detail. Every feature feels thoughtfully designed, and the support team genuinely cares about helping you succeed. It’s rare to find this level of quality and reliability.",
+      "Our sales team finally has a single place to manage leads, quotations, and customer follow-ups. We've reduced response times significantly and never lose track of an opportunity anymore.",
   },
   {
     avatar: (
@@ -48,32 +25,54 @@ const userTestimonials = [
         S
       </Avatar>
     ),
-    name: "Sophia Nguyen",
-    occupation: "Finance Director, BrightWorks Manufacturing",
+    name: "Sarah Wilson",
+    occupation: "Business Development Lead, Nexa Solutions",
     testimonial:
-      "I was skeptical at first, but the setup was effortless and the learning curve almost nonexistent. Within days, our accounting process became smoother and far more transparent. I can’t imagine going back.",
+      "Creating quotations takes minutes instead of hours, and converting them into sales orders is effortless. The entire sales workflow feels much more organized.",
   },
   {
     avatar: (
       <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
-        D
+        R
       </Avatar>
     ),
-    name: "Daniel Thompson",
-    occupation: "Chief Operating Officer, Aegis Group",
+    name: "Rahul Sharma",
+    occupation: "Director, Sharma Electronics",
     testimonial:
-      "We needed something flexible enough to handle our projects, payroll, and compliance — this platform delivered all that and more. It’s efficient, modern, and keeps our entire organization in sync.",
+      "The customer history and order tracking features have completely changed how we work. Every interaction is recorded, making it easy for our team to provide consistent service.",
   },
   {
     avatar: (
       <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
-        I
+        E
       </Avatar>
     ),
-    name: "Isabella Romero",
-    occupation: "Program Coordinator, Helping Hands Foundation",
+    name: "Emily Johnson",
+    occupation: "Operations Manager, BrightLine Retail",
     testimonial:
-      "As a small non-profit, we needed software that simplified our finances without feeling overwhelming. This solution gave us structure, accuracy, and peace of mind — all in one elegant package.",
+      "Our sales representatives can instantly see product information, customer history, and pending orders. It has improved communication across the entire company.",
+  },
+  {
+    avatar: (
+      <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
+        M
+      </Avatar>
+    ),
+    name: "Michael Chen",
+    occupation: "Founder, Apex Industrial Supplies",
+    testimonial:
+      "The dashboards give us a clear picture of our pipeline, pending quotations, and sales performance. We can make decisions much faster with real-time insights.",
+  },
+  {
+    avatar: (
+      <Avatar variant="rounded" sx={{ bgcolor: "primary.dark" }}>
+        P
+      </Avatar>
+    ),
+    name: "Priya Nair",
+    occupation: "Customer Success Manager, Nova Services",
+    testimonial:
+      "Follow-up reminders and customer timelines ensure nothing slips through the cracks. It's become an essential part of how we build long-term customer relationships.",
   },
 ];
 

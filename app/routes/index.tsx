@@ -9,6 +9,7 @@ import Features from "~/components/Features";
 import Testimonials from "~/components/Testimonials";
 import FAQ from "~/components/FAQ";
 import Footer from "~/components/Footer";
+import LogoCollection from "~/components/LogoCollection";
 
 export default function Index() {
   return (
@@ -16,7 +17,7 @@ export default function Index() {
       <AppAppBar />
       <Hero />
       <div>
-        {/* <LogoCollection /> */}
+        <LogoCollection />
         <Features />
         <Divider />
         <Testimonials />

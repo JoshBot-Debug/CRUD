@@ -9,8 +9,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 import { styled } from "@mui/material/styles";
-import dashboardLight from "~/assets/dashboard-light.jpg";
-import dashboardDark from "~/assets/dashboard-dark.jpg";
+import dashboardLight from "~/assets/dashboard-light.png";
+import dashboardDark from "~/assets/dashboard-dark.png";
 
 const StyledBox = styled("div")(({ theme }) => ({
   alignSelf: "center",
@@ -76,7 +76,7 @@ export default function Hero() {
               fontSize: "clamp(3rem, 10vw, 3.5rem)",
             }}
           >
-            Geo-Analysis&nbsp;
+            Sales & Order&nbsp;
             <Typography
               component="span"
               variant="h1"
@@ -88,7 +88,7 @@ export default function Hero() {
                 }),
               })}
             >
-              platform
+              Management
             </Typography>
           </Typography>
           <Typography
@@ -98,8 +98,7 @@ export default function Hero() {
               width: { sm: "100%", md: "80%" },
             }}
           >
-            Explore our accounting platform for small and medium businesses A
-            comprehensive software that accomodates all accounting requirements
+            Create quotations, convert them into orders, track fulfillment, and manage customer relationships with complete visibility.
           </Typography>
           <Stack
             direction={{ xs: "column", sm: "row" }}

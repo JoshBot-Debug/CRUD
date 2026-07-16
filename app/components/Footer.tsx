@@ -43,7 +43,7 @@ export default function Footer() {
           }}
         >
           <Box sx={{ width: { xs: "100%", sm: "60%" } }}>
-            <Box sx={{ width: "fit-content", maxWidth: 300 }}>
+            <Box sx={{ width: "fit-content", maxWidth: 100 }}>
               <Logo />
             </Box>
             <Typography

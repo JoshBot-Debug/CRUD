@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import ColorModeIconDropdown from "~/theme/ColorModeIconDropdown";
 import Logo from "./Logo";
+import { Link } from "react-router";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -53,9 +54,9 @@ export default function AppAppBar() {
           <Box
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
           >
-            <Box sx={{ width: "100px", mr: 2 }}>
+            <Link to="/" style={{ width: 30, marginRight: 2 }}>
               <Logo />
-            </Box>
+            </Link>
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button href="#features" variant="text" color="info" size="small">
                 Features
