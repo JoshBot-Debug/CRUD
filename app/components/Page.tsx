@@ -16,9 +16,11 @@ import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
 import DownloadRounded from "@mui/icons-material/DownloadRounded";
 import ImportExportRounded from "@mui/icons-material/ImportExportRounded";
+import InfoRounded from "@mui/icons-material/InfoRounded";
 import CreateIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import PrintIcon from "@mui/icons-material/Print";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
@@ -31,7 +33,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Search from "./Search";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { debounce } from "@mui/material";
+import { Chip, debounce } from "@mui/material";
 
 const lazy = debounce((callback: () => void) => callback(), 400);
 
@@ -47,6 +49,7 @@ export interface PageForm {
   create?: FormItem;
   update?: FormItem;
   delete?: FormItem;
+  restore?: FormItem & { restoreWhen: (loaderData: any) => boolean; };
 }
 
 interface Props extends React.PropsWithChildren {
@@ -66,10 +69,12 @@ interface Props extends React.PropsWithChildren {
   create?: boolean;
   update?: boolean;
   delete?: boolean;
+  restore?: boolean;
   import?: boolean;
   export?: boolean;
   form?: PageForm;
   isNested?: boolean;
+  isRestorable?: boolean;
   deleteProps?: {
     label?: string;
     dialog?: {
@@ -79,6 +84,15 @@ interface Props extends React.PropsWithChildren {
       cancelLabel?: string;
     };
   };
+  restoreProps?: {
+    label?: string;
+    dialog?: {
+      title?: string;
+      content?: string;
+      continueLabel?: string;
+      cancelLabel?: string;
+    };
+  }
 }
 
 export default function Page(props: Props) {
@@ -93,9 +107,11 @@ export default function Page(props: Props) {
 
   const deleteFormId = props?.form?.delete?.form ?? props.formId;
   const updateFormId = props?.form?.update?.form ?? props.formId;
+  const restoreFormId = props?.form?.restore?.form ?? props.formId;
 
   const isEditing = searchParams.get("update") === updateFormId;
   const isDeleting = searchParams.get("delete") === deleteFormId;
+  const isRestoring = searchParams.get("restore") === restoreFormId;
   const isChild = outlet?.pageVariant == "child";
 
   const onSearch = useCallback(
@@ -134,12 +150,39 @@ export default function Page(props: Props) {
     [],
   );
 
+  const onRestoreShow = useCallback(
+    () =>
+      setSearchParams(
+        (prev) => {
+          if (!restoreFormId) return prev;
+          const next = new URLSearchParams(prev);
+          next.set("restore", restoreFormId);
+          return next;
+        },
+        { replace: true, preventScrollReset: true },
+      ),
+    [],
+  );
+
   const onDeleteHide = useCallback(
     () =>
       setSearchParams(
         (prev) => {
           const next = new URLSearchParams(prev);
           next.delete("delete");
+          return next;
+        },
+        { replace: true, preventScrollReset: true },
+      ),
+    [],
+  );
+
+  const onRestoreHide = useCallback(
+    () =>
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete("restore");
           return next;
         },
         { replace: true, preventScrollReset: true },
@@ -185,22 +228,26 @@ export default function Page(props: Props) {
       }}
     >
       <Stack direction="row" alignItems="center" spacing={1} mb={2}>
-        {pathnames.length > 1 && !isChild && !props.isNested && (
-          <IconButton
-            component={ArrowBackIcon}
-            onClick={() => navigate(-1)}
-            size="small"
-            sx={{ border: "none" }}
-          />
-        )}
-        {props.Icon}
-        {typeof props.title === "string" ? (
-          <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-            {props.title}
-          </Typography>
-        ) : (
-          props.title
-        )}
+        <Stack direction="row" alignItems="center" spacing={1} mb={2} sx={{ minWidth: 250, maxWidth: 250 }}>
+          {pathnames.length > 1 && !isChild && !props.isNested && (
+            <IconButton
+              component={ArrowBackIcon}
+              onClick={() => navigate(-1)}
+              size="small"
+              sx={{ border: "none" }}
+            />
+          )}
+          {props.Icon}
+          {typeof props.title === "string" ? (
+            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+              {props.title}
+            </Typography>
+          ) : (
+            props.title
+          )}
+        </Stack>
+        <Box aria-label="Here to add 1 gap" />
+        {props.isRestorable && <Chip icon={<InfoRounded />} label="This record has been deleted" variant="outlined" color="error" />}
         <Box flex={1} />
 
         <Search
@@ -268,16 +315,29 @@ export default function Page(props: Props) {
         >
           Edit
         </Button>
+
         <Button
           variant="contained"
           color="error"
           startIcon={<DeleteIcon />}
           onClick={onDeleteShow}
           size="small"
-          hidden={!props.delete}
+          hidden={!props.delete || props.isRestorable}
         >
           {props.deleteProps?.label ?? "Delete"}
         </Button>
+
+        <Button
+          variant="contained"
+          color="warning"
+          startIcon={<RestoreFromTrashIcon />}
+          onClick={onRestoreShow}
+          size="small"
+          hidden={!props.restore || !props.isRestorable}
+        >
+          {props.restoreProps?.label ?? "Restore"}
+        </Button>
+
         <Button
           variant="contained"
           color="secondary"
@@ -343,6 +403,36 @@ export default function Page(props: Props) {
             }
           >
             {props.deleteProps?.dialog?.continueLabel ?? "Continue"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={isRestoring} onClose={onRestoreHide}>
+        <DialogTitle>
+          {props.restoreProps?.dialog?.title ?? "Restore"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {props.restoreProps?.dialog?.content ??
+              "Are you sure you want to restore this item?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onRestoreHide}>
+            {props.restoreProps?.dialog?.cancelLabel ?? "Cancel"}
+          </Button>
+          <Button
+            autoFocus
+            type={!!props?.form?.restore?.formAction ? "submit" : "button"}
+            form={props?.form?.restore?.form ?? props.formId}
+            formAction={
+              !!props?.form?.restore?.formAction
+                ? (formData) =>
+                  props?.form?.restore?.formAction?.(formData, submit)
+                : undefined
+            }
+          >
+            {props.restoreProps?.dialog?.continueLabel ?? "Continue"}
           </Button>
         </DialogActions>
       </Dialog>

@@ -51,6 +51,7 @@ export default function createPageById(options: CreatePageByIdOptions) {
 
     const isNested = r2.pathname !== "/";
     const isExactMatch = location.pathname == r1.pathname;
+    const isRestorable = options?.form?.restore?.restoreWhen(loaderData);
 
     const onNavigateTo = useCallback(
       (row: any) => {
@@ -83,6 +84,8 @@ export default function createPageById(options: CreatePageByIdOptions) {
         create={isExactMatch && !isNested}
         update={isExactMatch}
         delete={isExactMatch}
+        restore={isExactMatch}
+        isRestorable={isRestorable}
       >
         <Box sx={{ display: "flex", flex: 1, gap: 2 }}>
           <Paper

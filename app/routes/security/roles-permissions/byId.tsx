@@ -30,7 +30,14 @@ export default createPageById({
       formAction: (formData, submit) => submit(formData, { method: "PATCH" })
     },
     delete: {
-      formAction: (formData, submit) => submit(formData, { method: "DELETE" })
+      formAction: (formData, submit) => submit(formData, { method: "DELETE", action: "?stayOnPage" })
+    },
+    restore: {
+      restoreWhen: loaderData => !!loaderData.one.deletedAt,
+      formAction: (formData, submit) => {
+        formData.set("deletedAt", "null");
+        return submit(formData, { method: "PATCH" });
+      }
     }
   }
 });
