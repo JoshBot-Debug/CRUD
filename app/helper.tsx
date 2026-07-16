@@ -80,13 +80,17 @@ export function renderForeignKey(url: `/${string}/`, displayField: string | ((va
     if (value == undefined) return "-";
 
     if (!Array.isArray(value))
-      return <Link to={to + value.id}>{typeof displayField === "string" ? value[displayField] : displayField(value)}</Link>;
+      return (
+        <Link to={to + value.id}>
+          <Chip label={typeof displayField === "string" ? value[displayField] : displayField(value)} color="secondary" />
+        </Link>
+      );
 
     return (
       <Box sx={{ display: "flex", gap: 1 }}>
         {value.map((o: any) => (
           <Link key={o.id} to={to + o.id}>
-            <Chip label={typeof displayField === "string" ? o[displayField] : displayField(o)} color="info" />
+            <Chip label={typeof displayField === "string" ? o[displayField] : displayField(o)} color="secondary" />
           </Link>
         ))}
       </Box>
@@ -199,6 +203,6 @@ export function assignDeep(obj: any, key: string, value: any) {
 }
 
 export function userFullName(user?: any) {
-  if(!user) return "-"
+  if (!user) return "-"
   return `${user.firstName} ${user.middleName} ${user.lastName}`
 }
