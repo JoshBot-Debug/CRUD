@@ -1,6 +1,7 @@
 import createPageByIdAction from "~/factory/createPageByIdAction.server";
 import createPageByIdLoader from "~/factory/createPageByIdLoader.server";
 import createPageById from "~/factory/createPageById";
+import { userFullName } from "~/helper";
 
 export const action = createPageByIdAction({
   pageParamsKey: "users-roles",
@@ -16,14 +17,15 @@ export const loader = createPageByIdLoader({
 
 export default createPageById({
   column: {
-    titleField: "user",
-    subtitleField: "user",
+    titleField: "users_id",
+    subtitleField: "users_id",
     titleValueFormatter: (value) => {
-            return value.full_name;
-          },
+      console.log(value)
+      return userFullName(value);
+    },
     subtitleValueFormatter: (value) => {
-            return value.username;
-          }
+      return value.email;
+    }
   },
   formId: "users-roles",
   pageParamsKey: "users-roles",

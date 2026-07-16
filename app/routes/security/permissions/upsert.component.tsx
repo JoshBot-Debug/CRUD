@@ -58,7 +58,7 @@ export default function UpsertComponent() {
                 label="Roles"
                 disabled={isReadonly}
                 parseResult={(result) =>
-                  result.map((r: any) => ({ label: r.name, value: r.id }))
+                  result.rows.map((r: any) => ({ label: r.name, value: r.id }))
                 }
                 defaultValue={state.roles?.map((o: any) => ({
                   label: o.name,

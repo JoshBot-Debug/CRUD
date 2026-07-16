@@ -54,21 +54,21 @@ export default createPageList({
       renderCell: renderForeignKey("/security/permissions/", "name")
     },
     {
-      field: "created_at",
+      field: "createdAt",
       headerName: "Created At",
       flex: 2,
       type: "dateTime",
       valueFormatter: formatDatetime
     },
     {
-      field: "updated_at",
+      field: "updatedAt",
       headerName: "Updated At",
       flex: 2,
       type: "dateTime",
       valueFormatter: formatDatetime
     },
     {
-      field: "deleted_at",
+      field: "deletedAt",
       headerName: "Deleted At",
       flex: 2,
       type: "dateTime",

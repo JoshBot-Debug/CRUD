@@ -1,6 +1,6 @@
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
-import { renderForeignKey } from "~/helper";
+import { renderForeignKey, userFullName } from "~/helper";
 
 export const loader = createPageListLoader({
   getMany: (l) => "userId" in l.params ? `/v1/users/${l.params.userId}/security/users-roles` : `/v1/security/users-roles`,
@@ -16,14 +16,14 @@ export default createPageList({
       type: "string"
     },
     {
-      field: "user",
+      field: "users_id",
       headerName: "User",
       flex: 1,
       type: "string",
-      renderCell: renderForeignKey("/users/", "full_name")
+      renderCell: renderForeignKey("/users/", userFullName)
     },
     {
-      field: "role",
+      field: "roles_id",
       headerName: "Role",
       flex: 1,
       type: "string",

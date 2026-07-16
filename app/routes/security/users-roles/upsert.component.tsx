@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import { useOutletContext, useSearchParams } from "react-router";
 import LazySelect from "~/components/LazySelect";
 import UnsavedChanges from "~/components/UnsavedChanges";
+import { userFullName } from "~/helper";
 
 export default function UpsertComponent(props: any) {
   const outlet = useOutletContext<any>();
@@ -36,27 +37,27 @@ export default function UpsertComponent(props: any) {
             >
               <LazySelect
                 path="/api/users"
-                name="user"
+                name="usersId"
                 label="User"
                 disabled={isReadonly}
-                parseResult={(result) => result.rows.map((r: any) => ({ label: `${r.firstName} ${r.middleName} ${r.lastName}`, value: r.id }))}
+                parseResult={(result) => result.rows.map((r: any) => ({ label: userFullName(r), value: r.id }))}
                 defaultValue={{
-                  label: state.user?.full_name,
-                  value: state.user?.id,
+                  label: userFullName(state.users_id),
+                  value: state.users_id?.id,
                 }}
                 required
               />
               <LazySelect
                 path="/api/security/roles"
-                name="role"
+                name="rolesId"
                 label="Roles"
                 disabled={isReadonly}
                 parseResult={(result) =>
-                  result.map((r: any) => ({ label: r.name, value: r.id }))
+                  result.rows.map((r: any) => ({ label: r.name, value: r.id }))
                 }
                 defaultValue={{
-                  label: state.role?.name,
-                  value: state.role?.id,
+                  label: state.roles_id?.name,
+                  value: state.roles_id?.id,
                 }}
                 required
               />

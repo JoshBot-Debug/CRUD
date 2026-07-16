@@ -126,19 +126,6 @@ export default function UpsertComponent(props: any) {
                 fullWidth
               />
             </Grid>
-            <Grid
-              size={{ xs: 12, sm: 6 }}
-              sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-            >
-              <LazySelect
-                path="/api/users"
-                name="user"
-                label="User"
-                required
-                disabled={isReadonly}
-                parseResult={(result) => result.rows.map((r: any) => ({ label: `${r.firstName} ${r.middleName} ${r.lastName}`, value: r.id }))}
-              />
-            </Grid>
           </Grid>
         </CardContent>
       </Card>

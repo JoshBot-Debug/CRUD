@@ -71,7 +71,7 @@ export function merge<T>(object: T, next: T): T {
   return next;
 }
 
-export function renderForeignKey(url: `/${string}/`, displayField: string) {
+export function renderForeignKey(url: `/${string}/`, displayField: string | ((value: any) => string)) {
   return ({ row, field, ...d }: any) => {
     const r2 = useResolvedPath("../");
     const to = r2.pathname.slice(0, -1) + url;
@@ -80,13 +80,13 @@ export function renderForeignKey(url: `/${string}/`, displayField: string) {
     if (value == undefined) return "-";
 
     if (!Array.isArray(value))
-      return <Link to={to + value.id}>{value[displayField]}</Link>;
+      return <Link to={to + value.id}>{typeof displayField === "string" ? value[displayField] : displayField(value)}</Link>;
 
     return (
       <Box sx={{ display: "flex", gap: 1 }}>
         {value.map((o: any) => (
           <Link key={o.id} to={to + o.id}>
-            <Chip label={o[displayField]} color="info" />
+            <Chip label={typeof displayField === "string" ? o[displayField] : displayField(o)} color="info" />
           </Link>
         ))}
       </Box>
@@ -196,4 +196,9 @@ export function assignDeep(obj: any, key: string, value: any) {
       curr = curr[part];
     }
   }
+}
+
+export function userFullName(user?: any) {
+  if(!user) return "-"
+  return `${user.firstName} ${user.middleName} ${user.lastName}`
 }
