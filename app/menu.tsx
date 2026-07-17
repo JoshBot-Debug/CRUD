@@ -15,5 +15,5 @@ export const MainMenuItems: MainMenuItem[] = [
 ];
 
 export const SecondaryMenuItems: MainMenuItem[] = [
-  { label: "Settings", Icon: Icon.Settings, to: "#" },
+  { label: "Settings", Icon: Icon.Settings, to: "/dashboard" },
 ];
