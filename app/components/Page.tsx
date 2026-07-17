@@ -219,8 +219,6 @@ export default function Page(props: Props) {
     [setSearchParams],
   );
 
-  console.log(props.menu)
-
   return (
     <Box
       sx={{

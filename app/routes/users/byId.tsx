@@ -23,12 +23,20 @@ export default createPageById({
   pageParamsKey: "users",
   tabLabel: "Users",
   pageTitle: "User",
+  isRowDeleted: row => row.deletedAt,
   form: {
     update: {
       formAction: (formData, submit) => submit(formData, { method: "PATCH" })
     },
     delete: {
       formAction: (formData, submit) => submit(formData, { method: "DELETE" })
+    },
+    restore: {
+      restoreWhen: loaderData => !!loaderData.one.deletedAt,
+      formAction: (formData, submit) => {
+        formData.set("deletedAt", "null");
+        return submit(formData, { method: "PATCH" });
+      }
     }
   }
 });

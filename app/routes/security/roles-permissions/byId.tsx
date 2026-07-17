@@ -25,6 +25,7 @@ export default createPageById({
   pageParamsKey: "roles-permissions",
   tabLabel: "Roles Permissions",
   pageTitle: "Roles Permission",
+  isRowDeleted: row => row.deletedAt,
   form: {
     update: {
       formAction: (formData, submit) => submit(formData, { method: "PATCH" })

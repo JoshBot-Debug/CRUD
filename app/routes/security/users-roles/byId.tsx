@@ -20,7 +20,6 @@ export default createPageById({
     titleField: "usersId",
     subtitleField: "usersId",
     titleValueFormatter: (value) => {
-      console.log(value)
       return userFullName(value);
     },
     subtitleValueFormatter: (value) => {
@@ -31,6 +30,7 @@ export default createPageById({
   pageParamsKey: "users-roles",
   tabLabel: "Users Roles",
   pageTitle: "Users Role",
+  isRowDeleted: row => row.deletedAt,
   form: {
     update: {
       formAction: (formData, submit) => submit(formData, { method: "PATCH" })

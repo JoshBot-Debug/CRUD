@@ -1,4 +1,5 @@
 import createNavigationChildrenPage from "~/factory/createNavigationChildrenPage";
+import { applyDatatableDefaultFilters } from "~/helper";
 import { Icon } from "~/icons";
 
 const { pages, DefaultComponent } = createNavigationChildrenPage({
@@ -8,25 +9,25 @@ const { pages, DefaultComponent } = createNavigationChildrenPage({
     {
       label: "Users & Roles",
       Icon: Icon.UsersAndRoles,
-      href: "../security/users-roles",
+      href: applyDatatableDefaultFilters("../security/users-roles"),
       hrefAdd: "../security/users-roles/create?create=users-roles",
     },
     {
       label: "Roles & Permissions",
       Icon: Icon.RolesAndPermissions,
-      href: "../security/roles-permissions",
+      href: applyDatatableDefaultFilters("../security/roles-permissions"),
       hrefAdd: "../security/roles-permissions/create?create=roles-permissions",
     },
     {
       label: "Roles",
       Icon: Icon.Roles,
-      href: "../security/roles",
+      href: applyDatatableDefaultFilters("../security/roles"),
       hrefAdd: "../security/roles/create?create=roles",
     },
     {
       label: "Permissions",
       Icon: Icon.Permissions,
-      href: "../security/permissions",
+      href: applyDatatableDefaultFilters("../security/permissions"),
       hrefAdd: "../security/permissions/create?create=permissions",
     },
   ],

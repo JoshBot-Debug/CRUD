@@ -206,3 +206,28 @@ export function userFullName(user?: any) {
   if (!user) return "-"
   return `${user.firstName} ${user.middleName} ${user.lastName}`
 }
+
+export function sanitizeUrlPath(input: string): string {
+  if (!input) return '/';
+
+  const isAbsoluteUrl = /^[a-zA-Z][a-zA-Z\d.+\-]*:\/\//.test(input);
+
+  if (isAbsoluteUrl)
+    return input.replace(/\/+$/, '');
+
+  const cleanedPath = input.replace(/^\/+|\/+$/g, '');
+
+  return cleanedPath ? `/${cleanedPath}` : '/';
+}
+
+export function applyDatatableDefaultFilters(path: string) {
+  path = sanitizeUrlPath(path);
+
+  const searchParams = new URLSearchParams({
+    sortField: "createdAt",
+    sortDirection: "desc",
+    filters: JSON.stringify({ items: [{ field: 'deletedAt', operator: 'isEmpty' }] })
+  });
+
+  return path + "?" + searchParams;
+}

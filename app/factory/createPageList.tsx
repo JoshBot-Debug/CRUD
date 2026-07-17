@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import type { GridColDef } from "@mui/x-data-grid";
 import download from "downloadjs";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useLocation, useSearchParams, useSubmit, type SubmitFunction } from "react-router";
 import { useNavigate, useResolvedPath } from "react-router";
 import { exportToCSV } from "~/.client/helper";
@@ -13,7 +13,7 @@ import Page from "~/components/Page";
 import useDialog, { type DialogContextType } from "~/hooks/useDialog";
 import useDialogComponent from "~/hooks/useDialogComponent";
 import useFetchAPI from "~/hooks/useFetchAPI";
-import FilterRounded from "@mui/icons-material/FilterAltRounded";
+import FilterClearRounded from "@mui/icons-material/FilterAltOffRounded";
 
 type RenderContextMenuItemsOptions = {
   dialog: DialogContextType;
@@ -34,6 +34,7 @@ export interface CreatePageListOptions {
   ) => OptionsMenuItem[];
   columns: Array<GridColDef>;
   import?: () => `/${string}`;
+  isRowDeleted?: (row: any) => boolean;
 }
 
 export default function createPageList(options: CreatePageListOptions) {
@@ -49,7 +50,7 @@ export default function createPageList(options: CreatePageListOptions) {
     const dialog = useDialog();
     const submit = useSubmit();
     const fetch = useFetchAPI();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const search = searchParams.get(`search:${options.pageParamsKey}`)
 
     const importDialog = useDialogComponent({
@@ -117,17 +118,19 @@ export default function createPageList(options: CreatePageListOptions) {
       [options.onRenderContextMenuItems],
     );
 
-    const [showDeleted, setShowDeleted] = useState(false);
+    function onClearFilters() {
+      setSearchParams(searchParams => {
+        searchParams.delete("filters")
+        searchParams.delete("sortField")
+        searchParams.delete("sortDirection")
+        searchParams.delete("page")
+        searchParams.delete("pageSize")
+        return new URLSearchParams(searchParams)
+      })
+    }
 
     const menuConfig: MenuItemConfig[] = [
-      { type: 'separator' },
-      {
-        label: 'Filters',
-        icon: <FilterRounded />,
-        children: [
-          { label: 'Show deleted', component: "checkbox", checked: showDeleted, closeOnClick: false, onClick: () => setShowDeleted(!showDeleted) },
-        ],
-      },
+      { label: 'Clear filters', icon: <FilterClearRounded />, onClick: onClearFilters },
     ];
 
 
@@ -162,6 +165,7 @@ export default function createPageList(options: CreatePageListOptions) {
             columns={options.columns}
             onRowDoubleClick={onRowDoubleClick}
             onRenderContextMenuItems={onRenderContextMenuWithDialog}
+            getRowClassName={(p) => options.isRowDeleted?.(p.row) ? 'line-through' : ''}
             sx={{
               position: "absolute",
               top: 0,

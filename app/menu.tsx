@@ -1,5 +1,6 @@
 import type React from "react";
 import { Icon } from "./icons";
+import { applyDatatableDefaultFilters } from "./helper";
 
 export type MainMenuItem = {
   label: string;
@@ -9,7 +10,7 @@ export type MainMenuItem = {
 
 export const MainMenuItems: MainMenuItem[] = [
   { label: "Dashboard", Icon: Icon.Dashboard, to: "/dashboard" },
-  { label: "Users", Icon: Icon.Users, to: "/users" },
+  { label: "Users", Icon: Icon.Users, to: applyDatatableDefaultFilters("/users") },
   { label: "Security", Icon: Icon.Security, to: "/security" },
 ];
 

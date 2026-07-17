@@ -31,6 +31,7 @@ interface Props {
   hasNextPage: boolean;
   search?: string | null;
   onRenderContextMenuItems?: (row: any) => OptionsMenuItem[];
+  getRowClassName?: (params: GridRowClassNameParams<any>) => string;
 }
 
 export interface TinyDatatableColDef {
@@ -47,6 +48,7 @@ interface TinyDatatableProps {
   column: TinyDatatableColDef;
   rows: any[];
   selected?: (row: any) => boolean;
+  getRowClassName?: (row: any) => string;
 }
 
 export default function Datatable(props: Props) {
@@ -92,7 +94,7 @@ export default function Datatable(props: Props) {
 
   const getRowClassName = React.useCallback(
     (params: GridRowClassNameParams<any>) =>
-      params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd",
+      `${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"} ${props.getRowClassName ? props.getRowClassName(params) : ''}`,
     [],
   );
 
@@ -222,13 +224,15 @@ export default function Datatable(props: Props) {
           row: { onContextMenu: onContextMenu },
         }}
       />
-      <OptionsMenu
-        open={contextMenuRowIndex > -1}
-        anchorReference="anchorPosition"
-        anchorPosition={anchorPos}
-        menuItems={renderMenuItems}
-        onClose={() => setContextMenuRowIndex(-1)}
-      />
+      {!!renderMenuItems.length && (
+        <OptionsMenu
+          open={contextMenuRowIndex > -1}
+          anchorReference="anchorPosition"
+          anchorPosition={anchorPos}
+          menuItems={renderMenuItems}
+          onClose={() => setContextMenuRowIndex(-1)}
+        />
+      )}
     </>
   );
 }
@@ -276,9 +280,11 @@ export function TinyDatatable(props: TinyDatatableProps) {
               <ListItemText
                 slotProps={{
                   primary: {
+                    className: props.getRowClassName?.(row),
                     sx: { overflow: "hidden", textOverflow: "ellipsis" },
                   },
                   secondary: {
+                    className: props.getRowClassName?.(row),
                     sx: { overflow: "hidden", textOverflow: "ellipsis" },
                   },
                 }}

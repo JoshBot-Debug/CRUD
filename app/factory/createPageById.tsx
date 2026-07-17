@@ -35,6 +35,7 @@ export interface CreatePageByIdOptions {
   column: TinyDatatableColDef;
   menu?: Array<MainMenuItem>;
   renderIcon?: (pathname: string) => React.ReactNode;
+  isRowDeleted?: (row: any) => boolean;
 }
 
 export default function createPageById(options: CreatePageByIdOptions) {
@@ -119,6 +120,7 @@ export default function createPageById(options: CreatePageByIdOptions) {
                 onFocus={onNavigateTo}
                 onRowDoubleClick={onNavigateTo}
                 selected={(r) => r.id == loaderData.one.id}
+                getRowClassName={(row) => options.isRowDeleted?.(row) ? 'line-through' : ''}
               />
             </TabPanel>
             <TabPanel

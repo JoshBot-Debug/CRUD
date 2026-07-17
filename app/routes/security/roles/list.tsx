@@ -1,6 +1,5 @@
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
-import { renderForeignKey } from "~/helper";
 import { formatDatetime } from "~/helper";
 
 export const loader = createPageListLoader({
@@ -9,6 +8,7 @@ export const loader = createPageListLoader({
 });
 
 export default createPageList({
+  isRowDeleted: row => row.deletedAt,
   columns: [
     {
       field: "id",

@@ -20,6 +20,12 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 export default function NavbarBreadcrumbs() {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
+  const queryCache = React.useRef<Record<string, string>>({});
+
+  React.useEffect(() => {
+    if (location.pathname && location.search)
+      queryCache.current[location.pathname] = location.search;
+  }, [location.pathname, location.search]);
 
   return (
     <StyledBreadcrumbs
@@ -30,27 +36,31 @@ export default function NavbarBreadcrumbs() {
         underline="hover"
         color="inherit"
         component={RouterLink}
-        to="/dashboard"
+        to={`/dashboard${queryCache.current["/dashboard"] || ""}`}
       >
         Dashboard
       </Link>
 
       {pathnames.map((value, index) => {
-        const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+        if (value == "dashboard") return null;
+
+        const baseLink = `/${pathnames.slice(0, index + 1).join("/")}`;
         const isLast = index === pathnames.length - 1;
         const label = value.charAt(0).toUpperCase() + value.slice(1);
-        if (value == "dashboard") return null;
+        const savedSearch = queryCache.current[baseLink] || "";
+        const destinationUrl = `${baseLink}${savedSearch}`;
+        
         return isLast ? (
-          <Typography key={to} color="text.primary" sx={{ fontWeight: 600 }}>
+          <Typography key={baseLink} color="text.primary" sx={{ fontWeight: 600 }}>
             {label.replaceAll("-", " ")}
           </Typography>
         ) : (
           <Link
-            key={to}
+            key={baseLink}
             underline="hover"
             color="inherit"
             component={RouterLink}
-            to={to}
+            to={destinationUrl}
           >
             {label.replaceAll("-", " ")}
           </Link>

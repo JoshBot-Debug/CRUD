@@ -26,12 +26,24 @@ export default function createPageListLoader(
       pageParamsKey: options.pageParamsKey,
     });
 
+    const sortField = url.searchParams.get("sortField");
+    const sortDirection = url.searchParams.get("sortDirection");
+    const search = url.searchParams.get("search");
+    const filters = JSON.parse(url.searchParams.get("filters") ?? "{}");
+
+    console.log({
+      sortField,
+      sortDirection,
+      search,
+    })
+    console.log(filters)
+    // url.searchParams.set("filter")
+
     const r = await fetchAPI<any>(url, {
       session,
       context: l.context,
     });
 
-    
     if (r instanceof Response) return r;
 
     if (r.commitSession) await headers.commit();
