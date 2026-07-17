@@ -1,17 +1,19 @@
 import Box from "@mui/material/Box";
 import type { GridColDef } from "@mui/x-data-grid";
 import download from "downloadjs";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLocation, useSearchParams, useSubmit, type SubmitFunction } from "react-router";
 import { useNavigate, useResolvedPath } from "react-router";
 import { exportToCSV } from "~/.client/helper";
 import Datatable from "~/components/Datatable";
 import FileUpload from "~/components/FileUpload";
+import type { MenuItemConfig } from "~/components/GenericMenuBar";
 import type { OptionsMenuItem } from "~/components/OptionsMenu";
 import Page from "~/components/Page";
 import useDialog, { type DialogContextType } from "~/hooks/useDialog";
 import useDialogComponent from "~/hooks/useDialogComponent";
 import useFetchAPI from "~/hooks/useFetchAPI";
+import FilterRounded from "@mui/icons-material/FilterAltRounded";
 
 type RenderContextMenuItemsOptions = {
   dialog: DialogContextType;
@@ -115,6 +117,20 @@ export default function createPageList(options: CreatePageListOptions) {
       [options.onRenderContextMenuItems],
     );
 
+    const [showDeleted, setShowDeleted] = useState(false);
+
+    const menuConfig: MenuItemConfig[] = [
+      { type: 'separator' },
+      {
+        label: 'Filters',
+        icon: <FilterRounded />,
+        children: [
+          { label: 'Show deleted', component: "checkbox", checked: showDeleted, closeOnClick: false, onClick: () => setShowDeleted(!showDeleted) },
+        ],
+      },
+    ];
+
+
     return (
       <Page
         pageParamsKey={options.pageParamsKey}
@@ -129,6 +145,7 @@ export default function createPageList(options: CreatePageListOptions) {
         import={!!options.import && !isNested}
         export
         search
+        menu={menuConfig}
       >
         {importDialog.Component}
         <Box

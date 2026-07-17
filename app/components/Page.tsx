@@ -34,6 +34,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Search from "./Search";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Chip, debounce } from "@mui/material";
+import GenericMenuBar, { type MenuItemConfig } from "./GenericMenuBar";
 
 const lazy = debounce((callback: () => void) => callback(), 400);
 
@@ -75,6 +76,7 @@ interface Props extends React.PropsWithChildren {
   form?: PageForm;
   isNested?: boolean;
   isRestorable?: boolean;
+  menu?: MenuItemConfig[];
   deleteProps?: {
     label?: string;
     dialog?: {
@@ -217,6 +219,8 @@ export default function Page(props: Props) {
     [setSearchParams],
   );
 
+  console.log(props.menu)
+
   return (
     <Box
       sx={{
@@ -247,7 +251,7 @@ export default function Page(props: Props) {
           )}
         </Stack>
         <Box aria-label="Here to add 1 gap" />
-        {props.isRestorable && <Chip icon={<InfoRounded />} label="This record has been deleted" variant="outlined" color="error" />}
+        {!!props.isRestorable && <Chip icon={<InfoRounded />} label="This record has been deleted" variant="outlined" color="error" />}
         <Box flex={1} />
 
         <Search
@@ -359,7 +363,7 @@ export default function Page(props: Props) {
             },
           }}
         >
-          {props.import && (
+          {!!props.import && (
             <Button
               startIcon={<ImportExportRounded />}
               onClick={props.onImport}
@@ -367,12 +371,14 @@ export default function Page(props: Props) {
               Import
             </Button>
           )}
-          {props.export && (
+          {!!props.export && (
             <Button startIcon={<DownloadRounded />} onClick={props.onExport}>
               Export
             </Button>
           )}
         </ButtonGroup>
+
+        {!!props.menu && <GenericMenuBar config={props.menu} />}
       </Stack>
 
       {props.children}

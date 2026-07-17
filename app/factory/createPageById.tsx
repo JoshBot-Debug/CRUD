@@ -27,9 +27,9 @@ export interface CreatePageByIdOptions {
   pageParamsKey: string;
   formId: string;
   pageTitle:
-    | string
-    | React.ReactNode
-    | ((loaderData: any) => string | React.ReactNode);
+  | string
+  | React.ReactNode
+  | ((loaderData: any) => string | React.ReactNode);
   tabLabel: string;
   form?: PageForm;
   column: TinyDatatableColDef;

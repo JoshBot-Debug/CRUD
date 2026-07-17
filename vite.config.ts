@@ -18,6 +18,6 @@ export default defineConfig({
   //   }
   // },
   ssr: {
-    noExternal: ["@mui/x-data-grid"],
+    noExternal: ["@mui/x-data-grid", "@base-ui/react"],
   },
 });
