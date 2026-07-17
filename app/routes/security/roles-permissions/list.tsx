@@ -21,6 +21,7 @@ export default createPageList({
       headerName: "Role",
       flex: 1,
       type: "string",
+      valueFormatter: (r: any) => r.name,
       renderCell: renderForeignKey("/security/roles/", "name")
     },
     {
@@ -28,6 +29,7 @@ export default createPageList({
       headerName: "Permission",
       flex: 1,
       type: "string",
+      valueFormatter: (r: any) => r.name,
       renderCell: renderForeignKey("/security/permissions/", "name")
     },
     {

@@ -11,23 +11,23 @@ import { getSession } from "~/.server/session";
 
 const API = import.meta.env.VITE_API;
 
-export const middleware: Route.MiddlewareFunction[] = [
-  async ({ request, context }) => {
-    // const session = await getSession(request);
+// export const middleware: Route.MiddlewareFunction[] = [
+//   async ({ request, context }) => {
+//     const session = await getSession(request);
 
-    // if (!session.get("token")) return redirect("/sign-in");
+//     if (!session.get("token")) return redirect("/sign-in");
 
-    // const [permissions] = await fetchAPI<any>(
-    //   createURL("/v1/security/permissions?allPages"),
-    //   { session },
-    // );
+//     const [permissions] = await fetchAPI<any>(
+//       createURL("/v1/security/permissions?allPages"),
+//       { session },
+//     );
 
-    // context.set(
-    //   AppContext.permissions,
-    //   permissions.rows.map((row: any) => row.name),
-    // );
-  },
-];
+//     context.set(
+//       AppContext.permissions,
+//       permissions.rows.map((row: any) => row.name),
+//     );
+//   },
+// ];
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const session = await getSession(request);

@@ -8,7 +8,6 @@ export const loader = createPageListLoader({
 });
 
 export default createPageList({
-  isRowDeleted: row => row.deletedAt,
   columns: [
     {
       field: "firstName",
