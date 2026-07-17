@@ -1,5 +1,13 @@
+import type { Route } from "../+types";
 import createPageCreateAction from "~/factory/createPageCreateAction.server";
 import createPageCreate from "~/factory/createPageCreate";
+
+export function meta({ }: Route.MetaArgs) {
+  return [
+    { title: "Users | Iotafox" },
+    { name: "description", content: "An Iotafox CRM Solution" },
+  ];
+}
 
 export const action = createPageCreateAction({
   pageParamsKey: "users",

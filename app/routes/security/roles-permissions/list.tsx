@@ -1,6 +1,14 @@
+import type { Route } from "../../+types";
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
 import { formatDatetime, renderForeignKey } from "~/helper";
+
+export function meta({ }: Route.MetaArgs) {
+  return [
+    { title: "Roles Permissions | Iotafox" },
+    { name: "description", content: "An Iotafox CRM Solution" },
+  ];
+}
 
 export const loader = createPageListLoader({
   getMany: (l) => "userId" in l.params ? `/v1/users/${l.params.userId}/security/roles-permissions` : `/v1/security/roles-permissions`,

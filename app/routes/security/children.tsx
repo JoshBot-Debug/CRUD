@@ -1,6 +1,14 @@
 import createNavigationChildrenPage from "~/factory/createNavigationChildrenPage";
 import { applyDatatableDefaultFilters } from "~/helper";
 import { Icon } from "~/icons";
+import type { Route } from "../+types";
+
+export function meta({ }: Route.MetaArgs) {
+  return [
+    { title: "Security | Iotafox" },
+    { name: "description", content: "An Iotafox CRM Solution" },
+  ];
+}
 
 const { pages, DefaultComponent } = createNavigationChildrenPage({
   pageTitle: "Security",

@@ -1,6 +1,14 @@
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
 import { formatDatetime } from "~/helper";
+import type { Route } from "../+types";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Users | Iotafox" },
+    { name: "description", content: "An Iotafox CRM Solution" },
+  ];
+}
 
 export const loader = createPageListLoader({
   pageParamsKey: "users",

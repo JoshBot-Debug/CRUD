@@ -5,9 +5,9 @@ import SessionsChart from "~/components/SessionsChart";
 import PageViewsBarChart from "~/components/PageViewsBarChart";
 import Page from "~/components/Page";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "CRM | Iotafox" },
+    { title: "Dashboard | Iotafox" },
     { name: "description", content: "An Iotafox CRM Solution" },
   ];
 }
