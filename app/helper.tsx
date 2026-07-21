@@ -219,15 +219,3 @@ export function sanitizeUrlPath(input: string): string {
 
   return cleanedPath ? `/${cleanedPath}` : '/';
 }
-
-export function applyDatatableDefaultFilters(path: string) {
-  path = sanitizeUrlPath(path);
-
-  const searchParams = new URLSearchParams({
-    sortField: "createdAt",
-    sortDirection: "desc",
-    filters: JSON.stringify({ items: [{ field: 'deletedAt', operator: 'isEmpty' }] })
-  });
-
-  return path + "?" + searchParams;
-}

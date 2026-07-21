@@ -1,9 +1,9 @@
+import type { Route } from "../+types";
 import createPageListLoader from "~/factory/createPageListLoader.server";
 import createPageList from "~/factory/createPageList";
 import { formatDatetime } from "~/helper";
-import type { Route } from "../+types";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Users | Iotafox" },
     { name: "description", content: "An Iotafox CRM Solution" },
@@ -16,6 +16,7 @@ export const loader = createPageListLoader({
 });
 
 export default createPageList({
+  isRowDeleted: row => row.deletedAt,
   columns: [
     {
       field: "firstName",

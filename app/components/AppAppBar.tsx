@@ -31,7 +31,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: "8px 12px",
 }));
 
-export default function AppAppBar() {
+export default function AppAppBar(props: { goBack?: boolean; }) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -57,33 +57,40 @@ export default function AppAppBar() {
             <Link to="/" style={{ width: 30, marginRight: 2 }}>
               <Logo />
             </Link>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Button href="#features" variant="text" color="info" size="small">
-                Features
+            {props.goBack && (
+              <Button href="../" variant="text" color="info" size="small">
+                Go Back
               </Button>
-              <Button
-                href="#testimonials"
-                variant="text"
-                color="info"
-                size="small"
-              >
-                Testimonials
-              </Button>
-              <Button
-                href="#highlights"
-                variant="text"
-                color="info"
-                size="small"
-              >
-                Highlights
-              </Button>
-              <Button href="#pricing" variant="text" color="info" size="small">
-                Pricing
-              </Button>
-              <Button href="#faq" variant="text" color="info" size="small">
-                FAQ
-              </Button>
-            </Box>
+            )}
+            {!props.goBack && (
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <Button href="#features" variant="text" color="info" size="small">
+                  Features
+                </Button>
+                <Button
+                  href="#testimonials"
+                  variant="text"
+                  color="info"
+                  size="small"
+                >
+                  Testimonials
+                </Button>
+                <Button
+                  href="#highlights"
+                  variant="text"
+                  color="info"
+                  size="small"
+                >
+                  Highlights
+                </Button>
+                <Button href="#pricing" variant="text" color="info" size="small">
+                  Pricing
+                </Button>
+                <Button href="#faq" variant="text" color="info" size="small">
+                  FAQ
+                </Button>
+              </Box>
+            )}
           </Box>
           <Box
             sx={{

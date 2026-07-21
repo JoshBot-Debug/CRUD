@@ -289,3 +289,46 @@ export function exclude<T extends Record<string, any>>(object: T, ...keys: (stri
     return a;
   }, {} as T)
 }
+
+export function prepareSearchParams(
+  primary: URLSearchParams,
+  defaults: URLSearchParams
+) {
+  for (const [key, value] of defaults.entries()) {
+    if (key === "filters") {
+      const primaryFilters = JSON.parse(
+        primary.get("filters") ?? '{"items":[]}'
+      ) as { items: any[] };
+
+      const defaultFilters = JSON.parse(value) as {
+        items: any[];
+      };
+
+      const merged = [...primaryFilters.items];
+
+      for (const filter of defaultFilters.items) {
+        const exists = merged.some(
+          (f) => f.field === filter.field
+        );
+
+        if (!exists) {
+          merged.push(filter);
+        }
+      }
+
+      primary.set("filters", JSON.stringify({ items: merged }));
+    } else if (!primary.has(key)) {
+      primary.set(key, value);
+    }
+  }
+}
+
+export function applyDefaultDatatableSearchParams(url: URL) {
+  const defaultSearchParams = new URLSearchParams({
+    sortField: "createdAt",
+    sortDirection: "desc",
+    filters: JSON.stringify({ items: [{ field: 'deletedAt', operator: 'isEmpty' }] })
+  })
+  
+  prepareSearchParams(url.searchParams, defaultSearchParams);
+}

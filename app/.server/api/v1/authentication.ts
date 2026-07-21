@@ -16,13 +16,20 @@ router("POST", "/authentication.login", async (req: HandleRequest) => {
     password: users.password,
   }).from(users).where(eq(users.email, req.data.email));
 
+
+  if (!result.length)
+    throw new ProblemDocument({
+      status: 401,
+      detail: "The email or password you have entered is not correct",
+    })
+
   const [user] = result;
 
   const validPassword = await hash.compair(req.data.password, user.password);
 
   if (!validPassword) throw new ProblemDocument({
     status: 401,
-    detail: "The password you have entered is not correct",
+    detail: "The email or password you have entered is not correct",
   })
 
   return new Response(toast.success("Authentication", `${user.firstName} logged in`, { token: "Bearer token", email: req.data.email }), {

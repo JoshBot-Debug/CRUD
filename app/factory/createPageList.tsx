@@ -13,9 +13,7 @@ import Page from "~/components/Page";
 import useDialog, { type DialogContextType } from "~/hooks/useDialog";
 import useDialogComponent from "~/hooks/useDialogComponent";
 import useFetchAPI from "~/hooks/useFetchAPI";
-import FilterRounded from "@mui/icons-material/FilterAltRounded";
 import FilterClearRounded from "@mui/icons-material/FilterAltOffRounded";
-import { applyDatatableDefaultFilters } from "~/helper";
 
 type RenderContextMenuItemsOptions = {
   dialog: DialogContextType;
@@ -131,12 +129,7 @@ export default function createPageList(options: CreatePageListOptions) {
       })
     }
 
-    function onResetFilters() {
-      setSearchParams(new URLSearchParams(applyDatatableDefaultFilters("/")))
-    }
-
     const menuConfig: MenuItemConfig[] = [
-      { label: 'Reset filters', icon: <FilterRounded />, onClick: onResetFilters },
       { label: 'Clear filters', icon: <FilterClearRounded />, onClick: onClearFilters },
     ];
 

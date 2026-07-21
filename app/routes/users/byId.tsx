@@ -3,7 +3,7 @@ import createPageByIdAction from "~/factory/createPageByIdAction.server";
 import createPageByIdLoader from "~/factory/createPageByIdLoader.server";
 import createPageById from "~/factory/createPageById";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Users | Iotafox" },
     { name: "description", content: "An Iotafox CRM Solution" },
@@ -31,12 +31,20 @@ export default createPageById({
   pageParamsKey: "users",
   tabLabel: "Users",
   pageTitle: "User",
+  isRowDeleted: row => row.deletedAt,
   form: {
     update: {
       formAction: (formData, submit) => submit(formData, { method: "PATCH" })
     },
     delete: {
-      formAction: (formData, submit) => submit(formData, { method: "DELETE" })
+      formAction: (formData, submit) => submit(formData, { method: "DELETE", action: "?stayOnPage" })
+    },
+    restore: {
+      restoreWhen: loaderData => !!loaderData.one.deletedAt,
+      formAction: (formData, submit) => {
+        formData.set("deletedAt", "null");
+        return submit(formData, { method: "PATCH" });
+      }
     }
   }
 });

@@ -1,5 +1,5 @@
 import { data, type LoaderFunctionArgs } from "react-router";
-import { createHeaders, createURL, fetchAPI } from "~/.server/helper";
+import { applyDefaultDatatableSearchParams, createHeaders, createURL, fetchAPI } from "~/.server/helper";
 import { getSession } from "~/.server/session";
 
 export interface CreatePageByIdLoaderOptions {
@@ -26,6 +26,7 @@ export default function createPageByIdLoader(
         request: l.request,
         pageParamsKey: options.pageParamsKey,
       });
+      applyDefaultDatatableSearchParams(url);
       const r = await fetchAPI<any>(url, {
         session,
         context: l.context,

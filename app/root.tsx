@@ -19,6 +19,8 @@ import { DialogProvider } from "./hooks/useDialog";
 import type { Route } from "./+types/root";
 
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
+import { Box, CircularProgress, LinearProgress, Typography } from "@mui/material";
+import Logo from "./components/Logo";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -83,4 +85,69 @@ export default function App() {
 
 export function ErrorBoundary(props: any) {
   return <ErrorBoundaryComponent {...props} />;
+}
+
+export function HydrateFallback() {
+  return (
+    <StyledEngineProvider injectFirst>
+      <AppTheme themeComponents={xThemeComponents}>
+        <CssBaseline enableColorScheme />
+
+        <Box
+          sx={(theme) => ({
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "100vh",
+            p: 3,
+            width: "100%",
+            backgroundRepeat: "no-repeat",
+            backgroundImage:
+              "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)",
+            ...theme.applyStyles("dark", {
+              backgroundImage:
+                "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)",
+            }),
+          })}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              maxWidth: 380,
+              textAlign: "center",
+              gap: 3,
+            }}
+          >
+            <Box sx={{ maxWidth: 150 }}>
+              <Logo />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              <Typography variant="h6" component="h3" fontWeight="600" color="text.primary">
+                Loading assets
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                This won't take too long...
+              </Typography>
+            </Box>
+
+            <Box sx={{ width: 192 }}>
+              <LinearProgress
+                variant="indeterminate"
+                color="primary"
+                sx={{
+                  height: 4,
+                  borderRadius: 2,
+                  backgroundColor: 'action.disabledBackground'
+                }}
+              />
+            </Box>
+          </Box>
+        </Box>
+
+      </AppTheme>
+    </StyledEngineProvider>
+  );
 }
