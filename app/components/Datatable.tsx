@@ -194,7 +194,7 @@ export default function Datatable(props: Props) {
       </div>
     }
 
-    return props.columns.map(col => "renderCell" in col ? col : ({ ...col, renderCell }))
+    return props.columns.map(col => "renderCell" in col ? ({ ...col, search: props.search }) : ({ ...col, renderCell }))
   }, [props.columns, props.search])
 
   return (

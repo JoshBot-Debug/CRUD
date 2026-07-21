@@ -23,7 +23,7 @@ crud({
   prefix: "/v1/security",
   resource: "users-roles",
   model: usersRoles,
-  fields: { usersId: {}, rolesId: {} }
+  fields: { usersId: { id: true, firstName: true, middleName: true, lastName: true }, rolesId: { id: true, name: true } }
 })
 
 crud({

@@ -4,6 +4,8 @@ import type { GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { Link, useResolvedPath } from "react-router";
 import { ToWords } from "to-words";
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
 
 export function exportToCSV<T extends Record<string, any>>(
   columns: GridColDef[],
@@ -73,26 +75,49 @@ export function merge<T>(object: T, next: T): T {
 
 export function renderForeignKey(url: `/${string}/`, displayField: string | ((value: any) => string)) {
   return ({ row, field, ...d }: any) => {
+    const search = d.colDef.search;
     const r2 = useResolvedPath("../");
     const to = r2.pathname.slice(0, -1) + url;
     const value = row[field]
 
+    function renderMatch(value: string) {
+      if (!search) return value;
+      const matches = match(value, search, { insideWords: true });
+      const parts = parse(value, matches);
+
+      return <div style={{ width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+        {parts.map((part, index) => (
+          <span
+            key={index}
+            style={{
+              fontWeight: part.highlight ? 800 : 400,
+            }}
+          >
+            {part.text}
+          </span>
+        ))}
+      </div>
+    }
+
     if (value == undefined) return "-";
 
-    if (!Array.isArray(value))
+    if (!Array.isArray(value)) {
+      const displayValue = typeof displayField === "string" ? value[displayField] : displayField(value);
       return (
         <Link to={to + value.id}>
-          <Chip label={typeof displayField === "string" ? value[displayField] : displayField(value)} color="secondary" />
+          <Chip label={renderMatch(displayValue)} color="secondary" />
         </Link>
       );
+    }
 
     return (
       <Box sx={{ display: "flex", gap: 1 }}>
-        {value.map((o: any) => (
-          <Link key={o.id} to={to + o.id}>
-            <Chip label={typeof displayField === "string" ? o[displayField] : displayField(o)} color="secondary" />
+        {value.map((o: any) => {
+          const displayValue = typeof displayField === "string" ? o[displayField] : displayField(o);
+          return <Link key={o.id} to={to + o.id}>
+            <Chip label={renderMatch(displayValue)} color="secondary" />
           </Link>
-        ))}
+        })}
       </Box>
     );
   };

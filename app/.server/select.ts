@@ -35,7 +35,7 @@ function getSelectedFields(table: PgTableWithColumns<any>, fields: FieldSelectio
 }
 
 export function getJoins(table: PgTableWithColumns<any>, fields: FieldSelection = {}): { selection: Record<string, any>; joins: FieldJoin[] } {
-  if (!Object.keys(fields).length) return { selection: [], joins: [] };
+  if (!Object.keys(fields).length) return { selection: {}, joins: [] };
 
   const relationships = getRelationships(table);
 

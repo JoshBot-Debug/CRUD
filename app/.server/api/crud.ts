@@ -86,7 +86,7 @@ function getDateRange(search: string | null) {
 }
 
 function buildFilters(
-  model: PgTableWithColumns<any>,
+  fields: Record<string, any>,
   search: string | null,
   filters: GridFilterModel | null
 ): SQL | undefined {
@@ -97,10 +97,17 @@ function buildFilters(
   const searchWhere: SQL[] = [];
   const filterWhere: SQL[] = [];
 
+  const columns = Object.values(fields).filter(o => o instanceof PgColumn);
+  const relations = Object.values(fields).filter(o => !(o instanceof PgColumn));
+
+  for (const table of relations)
+    for (const field in table)
+      columns.push(table[field])
+
   // 1. Process Global Search (Iterating all columns)
   if (search) {
-    for (const key in model) {
-      const column = model[key];
+    for (const column of columns) {
+
       if (!(column instanceof PgColumn)) continue;
 
       if (column instanceof PgVarchar) {
@@ -136,7 +143,7 @@ function buildFilters(
     for (const item of filters.items) {
       const { field, operator, value } = item;
 
-      const column = model[field];
+      const column = fields[field];
 
       if (!(column instanceof PgColumn)) continue;
 
@@ -394,11 +401,11 @@ export default function crud({ model, ...options }: CRUDOptions) {
 
     const offset = page * pageSize;
 
-    const where = buildFilters(model, search, filters)
+    const where = buildFilters(fields, search, filters)
 
     const query = db.select(fields).from(model);
 
-    if(where) query.where(where);
+    if (where) query.where(where);
 
     if (!allPages) query.limit(pageSize).offset(offset);
 
